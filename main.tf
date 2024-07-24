@@ -50,7 +50,7 @@ resource "aws_security_group" "dms_sg" {
 resource "aws_db_instance" "source_db" {
   identifier             = "source-db"
   engine                 = "mysql"
-  instance_class         = "db.t2.micro"
+  instance_class         = "db.t3.micro"
   allocated_storage      = 10
   username               = var.source_db_user
   password               = var.source_db_password
@@ -61,7 +61,7 @@ resource "aws_db_instance" "source_db" {
 resource "aws_db_instance" "target_db" {
   identifier             = "target-db"
   engine                 = "mysql"
-  instance_class         = "db.t2.micro"
+  instance_class         = "db.t3.micro"
   allocated_storage      = 10
   username               = var.target_db_user
   password               = var.target_db_password
@@ -87,7 +87,7 @@ resource "aws_dms_replication_instance" "replication_instance" {
   vpc_security_group_ids      = [aws_security_group.dms_sg.id]
   replication_subnet_group_id = aws_dms_replication_subnet_group.dms_subnet_group.id
   engine_version              = "3.5.2"
-  publicly_accessible         = true
+  publicly_accessible         = false
   apply_immediately           = true
 
   tags = {
